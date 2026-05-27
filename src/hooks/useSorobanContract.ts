@@ -99,6 +99,7 @@ export function useSorobanContract<TResult = unknown>(
         args = [],
         fee = BASE_FEE,
         timeoutSeconds = 30,
+        sorobanRpcServer,
       } = { ...options, ...overrides };
 
       if (!publicKey) {
@@ -111,7 +112,7 @@ export function useSorobanContract<TResult = unknown>(
         // ── 1. Build ──────────────────────────────────────────────────────────
         dispatch({ type: "BUILDING" });
 
-        const server = new SorobanRpc.Server(config.sorobanRpcUrl);
+        const server = sorobanRpcServer ?? new SorobanRpc.Server(config.sorobanRpcUrl);
         const contract = new Contract(contractId);
 
         // Convert plain JS values to ScVals if needed

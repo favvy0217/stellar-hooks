@@ -129,6 +129,17 @@ const { call, status, result, hash, error, reset } = useSorobanContract({
 </button>
 ```
 
+You may also pass a pre-configured `SorobanRpc.Server` instance via the `sorobanRpcServer` option to reuse an existing connection or custom transport:
+
+```ts
+const { call, status } = useSorobanContract({
+  contractId: "CABC...XYZ",
+  method: "hello",
+  args: [nativeToScVal("world")],
+  sorobanRpcServer: myCustomServer,
+});
+```
+
 `result` contains the raw `xdr.ScVal` return value. Parse it with `scValToNative` from the SDK.
 
 ---
