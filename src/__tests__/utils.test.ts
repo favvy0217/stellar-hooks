@@ -5,8 +5,8 @@
  */
 
 import { describe, it, expect } from "vitest";
-import { parseAccountResponse } from "../src/utils";
-import { NETWORK_CONFIGS } from "../src/types";
+import { parseAccountResponse } from "../utils";
+import { NETWORK_CONFIGS } from "../types";
 import type { Horizon } from "@stellar/stellar-sdk";
 
 // ─── NETWORK_CONFIGS ──────────────────────────────────────────────────────────
@@ -37,6 +37,8 @@ const mockRaw = {
   account_id: "GABC123",
   sequence: "1234567890",
   subentry_count: 2,
+  num_sponsored: 3,
+  num_sponsoring: 4,
   thresholds: { low_threshold: 0, med_threshold: 0, high_threshold: 0 },
   flags: {
     auth_required: false,
@@ -68,6 +70,12 @@ describe("parseAccountResponse", () => {
 
   it("maps account_id to accountId", () => {
     expect(parsed.accountId).toBe("GABC123");
+  });
+
+  it("maps reserve-related account fields", () => {
+    expect(parsed.subentryCount).toBe(2);
+    expect(parsed.numSponsored).toBe(3);
+    expect(parsed.numSponsoring).toBe(4);
   });
 
   it("marks native balance as isNative=true", () => {

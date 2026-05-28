@@ -89,6 +89,9 @@ const {
 
 // data.balances   → StellarBalance[]
 // data.sequence   → string
+// data.subentryCount → number
+// data.numSponsored  → number
+// data.numSponsoring → number
 // data.raw        → raw Horizon.AccountResponse
 ```
 
