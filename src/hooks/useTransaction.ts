@@ -12,6 +12,7 @@ import { sleep, backoff } from "../utils";
 // ─── Options ──────────────────────────────────────────────────────────────────
 
 export interface UseTransactionOptions {
+  /** "soroban" uses rpc.Server; "classic" uses Horizon. Default: "soroban" */
   /** "soroban" uses rpc; "classic" uses Horizon. Default: "soroban" */
   mode?: "soroban" | "classic";
   /** Polling timeout in seconds. Default: 60 */
@@ -97,7 +98,7 @@ const initial: TransactionState = {
  * ```
  */
 export function useTransaction(
-  options: UseTransactionOptions = {}
+  options: UseTransactionOptions = {},
 ): UseTransactionReturn {
   const { mode = "soroban", timeoutSeconds = 60, onSuccess, onError } = options;
   const { config } = useStellarContext();
@@ -109,6 +110,7 @@ export function useTransaction(
 
       try {
         if (mode === "soroban") {
+          // rpc is the correct namespace in @stellar/stellar-sdk@13 (previously SorobanRpc)
           const server = new rpc.Server(config.sorobanRpcUrl);
           const tx = TransactionBuilder.fromXDR(signedXdr, config.networkPassphrase);
 
@@ -138,6 +140,7 @@ export function useTransaction(
             }
 
             if (getResult.status === rpc.Api.GetTransactionStatus.FAILED) {
+              throw new Error(`Transaction failed on-chain: ${txHash}`);
               throw new Error(`Transaction failed: ${txHash}`);
             }
           }
@@ -162,6 +165,7 @@ export function useTransaction(
         onError?.(error);
       }
     },
+    [mode, config, timeoutSeconds],
     [mode, config, timeoutSeconds, onSuccess, onError]
   );
 

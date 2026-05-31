@@ -35,7 +35,7 @@ type Action<TResult> =
 function createReducer<TResult>() {
   return function reducer(
     state: ContractState<TResult>,
-    action: Action<TResult>
+    action: Action<TResult>,
   ): ContractState<TResult> {
     switch (action.type) {
       case "RESET":
@@ -91,6 +91,7 @@ function createReducer<TResult>() {
  * ```
  */
 export function useSorobanContract<TResult = unknown>(
+  options: ContractCallOptions,
   options: ContractCallOptions<TResult>
 ): UseContractCallReturn<TResult> {
   const { config } = useStellarContext();
@@ -128,18 +129,21 @@ export function useSorobanContract<TResult = unknown>(
         // ── 1. Build ──────────────────────────────────────────────────────────
         dispatch({ type: "BUILDING" });
 
+        // rpc is the correct namespace in @stellar/stellar-sdk@13 (previously SorobanRpc)
         const server = sorobanRpcServer ?? new rpc.Server(config.sorobanRpcUrl);
         const contract = new Contract(contractId);
 
         // Convert plain JS values to ScVals if needed
         const scArgs = args.map((a) =>
-          a instanceof xdr.ScVal ? a : nativeToScVal(a)
+          a instanceof xdr.ScVal ? a : nativeToScVal(a),
         );
 
         const account = await server.getAccount(publicKey);
         const passphrase = networkPassphrase ?? config.networkPassphrase;
 
         const tx = new TransactionBuilder(account, {
+          // TransactionBuilder requires fee as a string
+          fee: String(fee),
           fee: fee.toString(),
           networkPassphrase: passphrase,
         })
@@ -165,7 +169,7 @@ export function useSorobanContract<TResult = unknown>(
 
         const signedTx = TransactionBuilder.fromXDR(
           signedXdr,
-          passphrase
+          passphrase,
         ) as Transaction;
 
         // ── 4. Submit ─────────────────────────────────────────────────────────
@@ -227,7 +231,7 @@ export function useSorobanContract<TResult = unknown>(
         return null;
       }
     },
-    [options, publicKey, networkPassphrase, signTransaction, config]
+    [options, publicKey, networkPassphrase, signTransaction, config],
   );
 
   const simulate = useCallback(

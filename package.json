@@ -1,10 +1,23 @@
 {
   "name": "stellar-hooks",
   "version": "0.1.0",
+  "sideEffects": false,
   "description": "React hooks for Stellar and Soroban — useFreighter, useStellarAccount, useSorobanContract, useTransaction, and more.",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.mts",
+        "default": "./dist/index.mjs"
+      },
+      "require": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      }
+    }
+  },
   "files": [
     "dist"
   ],
@@ -15,6 +28,7 @@
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "test:watch": "vitest",
+    "prepublishOnly": "npm run build"
     "changeset": "changeset",
     "changeset:version": "changeset version",
     "changeset:publish": "changeset publish"
@@ -41,10 +55,11 @@
     "dapp",
     "typescript"
   ],
-  "author": "",
+  "author": "stellar-hooks contributors",
   "license": "MIT",
   "repository": {
     "type": "git",
+    "url": "git+https://github.com/TheBigWealth89/stellar-hooks.git"
     "url": "https://github.com/spiffamani/stellar-hooks.git"
   },
   "peerDependencies": {

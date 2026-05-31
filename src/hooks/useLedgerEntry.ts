@@ -70,7 +70,7 @@ export interface UseLedgerEntryOptions {
  */
 export function useLedgerEntry(
   ledgerKey: xdr.LedgerKey | null | undefined,
-  options: UseLedgerEntryOptions = {}
+  options: UseLedgerEntryOptions = {},
 ): LedgerEntryState {
   const { enabled = true, refetchInterval = 0 } = options;
   const { config } = useStellarContext();
@@ -87,6 +87,13 @@ export function useLedgerEntry(
   });
 
   const fetch = useCallback(async () => {
+    if (!ledgerKey) return;
+    dispatch({ type: "FETCH_START" });
+
+    try {
+      // rpc is the correct namespace in @stellar/stellar-sdk@13 (previously SorobanRpc)
+      const server = new rpc.Server(config.sorobanRpcUrl);
+      const result = await server.getLedgerEntries(ledgerKey);
       if (!ledgerKey) return;
       dispatch({ type: "FETCH_START" });
 

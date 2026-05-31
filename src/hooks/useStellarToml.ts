@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { StellarTomlResolver } from "@stellar/stellar-sdk";
+import { StellarToml } from "@stellar/stellar-sdk";
 
 export interface StellarTomlData {
   CURRENCIES?: Array<Record<string, any>>;
@@ -33,7 +33,7 @@ export interface UseStellarTomlReturn {
  * Fetches and parses a domain's stellar.toml file via the SEP-1 standard.
  */
 export function useStellarToml(
-  domain: string | null | undefined
+  domain: string | null | undefined,
 ): UseStellarTomlReturn {
   const [data, setData] = useState<StellarTomlData | null>(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -44,7 +44,9 @@ export function useStellarToml(
     setIsLoading(true);
     setError(null);
     try {
-      const toml = await StellarTomlResolver.resolve(domain);
+      // StellarToml.Resolver is the correct API in @stellar/stellar-sdk@13
+      // (previously exported as StellarTomlResolver at the top level)
+      const toml = await StellarToml.Resolver.resolve(domain);
       setData(toml as StellarTomlData);
     } catch (err) {
       // Gracefully capture and surface errors (e.g., CORS, network failure)
@@ -56,7 +58,7 @@ export function useStellarToml(
 
   useEffect(() => {
     if (domain) {
-      refetch();
+      void refetch();
     }
   }, [domain, refetch]);
 
