@@ -18,15 +18,15 @@
     "size": "npm run build && size-limit"
   },
   "size-limit": [
-     {
-       "path": "dist/index.mjs",
-       "limit": "200 KB"
-     },
-     {
-       "path": "dist/index.js",
-       "limit": "200 KB"
-     }
-   ],
+    {
+      "path": "dist/index.mjs",
+      "limit": "200 KB"
+    },
+    {
+      "path": "dist/index.js",
+      "limit": "200 KB"
+    }
+  ],
   "keywords": [
     "stellar",
     "soroban",
@@ -60,6 +60,7 @@
     "@typescript-eslint/eslint-plugin": "^7.0.0",
     "@typescript-eslint/parser": "^7.0.0",
     "eslint": "^8.57.0",
+    "jsdom": "^29.1.1",
     "react": "^18.3.0",
     "react-test-renderer": "^18.3.0",
     "size-limit": "^12.1.0",
