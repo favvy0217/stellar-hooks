@@ -1,3 +1,10 @@
+/**
+ * @file useStellarToml.ts
+ * @description Hook for fetching and parsing stellar.toml files.
+ * @package stellar-hooks
+ * @license MIT
+ */
+
 import { useCallback, useEffect, useState } from "react";
 import { StellarToml } from "@stellar/stellar-sdk";
 

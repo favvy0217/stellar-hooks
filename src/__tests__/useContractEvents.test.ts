@@ -1,3 +1,10 @@
+/**
+ * @file useContractEvents.test.ts
+ * @description Unit tests for the useContractEvents hook.
+ * @package stellar-hooks
+ * @license MIT
+ */
+
 import { describe, it, expect, vi, beforeEach } from "vitest";
 
 // ─── Mock React hooks ─────────────────────────────────────────────────────────

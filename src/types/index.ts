@@ -1,3 +1,10 @@
+/**
+ * @file index.ts
+ * @description Common type definitions for the stellar-hooks library.
+ * @package stellar-hooks
+ * @license MIT
+ */
+
 import type { Horizon, rpc } from "@stellar/stellar-sdk";
 
 // ─── Network ──────────────────────────────────────────────────────────────────

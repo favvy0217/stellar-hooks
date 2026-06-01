@@ -1,3 +1,10 @@
+/**
+ * @file useStellarToml.ts
+ * @description SWR hook for fetching and parsing stellar.toml files.
+ * @package @stellar-hooks/swr
+ * @license MIT
+ */
+
 import useSWR, { type SWRConfiguration } from "swr";
 import { StellarToml } from "@stellar/stellar-sdk";
 

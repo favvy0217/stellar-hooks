@@ -1,3 +1,10 @@
+/**
+ * @file usePayment.ts
+ * @description Hook for building and submitting Stellar payments.
+ * @package stellar-hooks
+ * @license MIT
+ */
+
 import { useCallback } from "react";
 import {
   Asset,

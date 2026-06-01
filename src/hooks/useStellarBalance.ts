@@ -1,3 +1,10 @@
+/**
+ * @file useStellarBalance.ts
+ * @description Hook for fetching Stellar account balances.
+ * @package stellar-hooks
+ * @license MIT
+ */
+
 import { useStellarAccount, type UseStellarAccountOptions } from "./useStellarAccount";
 import type { StellarBalance } from "../types";
 

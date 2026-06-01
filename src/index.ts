@@ -1,3 +1,10 @@
+/**
+ * @file index.ts
+ * @description Main entry point for stellar-hooks library.
+ * @package stellar-hooks
+ * @license MIT
+ */
+
 // Provider & context
 export { StellarProvider, useStellarContext } from "./context";
 

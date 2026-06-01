@@ -1,3 +1,10 @@
+/**
+ * @file useClaimableBalances.ts
+ * @description SWR hook for fetching claimable balances.
+ * @package @stellar-hooks/swr
+ * @license MIT
+ */
+
 import useSWR, { type SWRConfiguration } from "swr";
 import { Horizon } from "@stellar/stellar-sdk";
 import { useStellarContext } from "stellar-hooks";

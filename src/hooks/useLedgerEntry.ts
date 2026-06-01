@@ -1,3 +1,10 @@
+/**
+ * @file useLedgerEntry.ts
+ * @description Hook for fetching ledger entries from Soroban RPC.
+ * @package stellar-hooks
+ * @license MIT
+ */
+
 import { useCallback, useEffect, useReducer, useRef } from "react";
 import { rpc, xdr } from "@stellar/stellar-sdk";
 import { useStellarContext } from "../context";

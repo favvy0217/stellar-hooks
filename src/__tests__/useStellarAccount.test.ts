@@ -1,3 +1,10 @@
+/**
+ * @file useStellarAccount.test.ts
+ * @description Unit tests for the useStellarAccount hook.
+ * @package stellar-hooks
+ * @license MIT
+ */
+
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { renderHook, waitFor } from "@testing-library/react";
 import { useStellarAccount } from "../hooks/useStellarAccount";

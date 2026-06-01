@@ -1,3 +1,10 @@
+/**
+ * @file useStellarAccount.ts
+ * @description Hook for fetching Stellar account details and balances.
+ * @package stellar-hooks
+ * @license MIT
+ */
+
 import { useCallback, useEffect, useReducer, useRef } from "react";
 import { Horizon } from "@stellar/stellar-sdk";
 import { useStellarContext } from "../context";

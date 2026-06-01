@@ -1,3 +1,10 @@
+/**
+ * @file useSorobanContract.ts
+ * @description Hook for interacting with Soroban smart contracts.
+ * @package stellar-hooks
+ * @license MIT
+ */
+
 import { useCallback, useReducer } from "react";
 import {
   Contract,
