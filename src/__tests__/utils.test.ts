@@ -4,6 +4,13 @@
  * and mock @stellar/freighter-api + @stellar/stellar-sdk for integration tests.
  */
 
+/**
+ * @file utils.test.ts
+ * @description Unit tests for utility functions.
+ * @package stellar-hooks
+ * @license MIT
+ */
+
 import { describe, it, expect } from "vitest";
 import { parseAccountResponse } from "../utils";       
 import { NETWORK_CONFIGS } from "../types";            

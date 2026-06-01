@@ -1,3 +1,9 @@
+/**
+ * @file useClaimableBalance.ts
+ * @description Hook for fetching claimable balances from the Stellar network.
+ * @package stellar-hooks
+ */
+
 import { useCallback, useReducer } from "react";
 import {
   Asset,

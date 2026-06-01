@@ -1,3 +1,10 @@
+/**
+ * @file useContractEvents.ts
+ * @description SWR hook for fetching Soroban contract events.
+ * @package @stellar-hooks/swr
+ * @license MIT
+ */
+
 import useSWR, { type SWRConfiguration } from "swr";
 import { rpc as SorobanRpc } from "@stellar/stellar-sdk";
 import { useStellarContext } from "stellar-hooks";

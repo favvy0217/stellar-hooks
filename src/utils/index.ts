@@ -1,3 +1,10 @@
+/**
+ * @file index.ts
+ * @description Internal utility functions for data parsing and helpers.
+ * @package stellar-hooks
+ * @license MIT
+ */
+
 import { Horizon } from "@stellar/stellar-sdk";
 import type { StellarBalance, StellarAccountData } from "../types";
 

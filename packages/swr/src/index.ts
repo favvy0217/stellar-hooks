@@ -1,4 +1,11 @@
 // ─── SWR-powered read hooks ──────────────────────────────────────────────────
+/**
+ * @file index.ts
+ * @description Entry point for the @stellar-hooks/swr package.
+ * @package @stellar-hooks/swr
+ * @license MIT
+ */
+
 export { useStellarAccount } from "./hooks/useStellarAccount";
 export type { UseStellarAccountSWROptions } from "./hooks/useStellarAccount";
 

@@ -1,3 +1,10 @@
+/**
+ * @file useStellarAccount.ts
+ * @description SWR hook for fetching Stellar account data.
+ * @package @stellar-hooks/swr
+ * @license MIT
+ */
+
 import useSWR, { type SWRConfiguration } from "swr";
 import { Horizon } from "@stellar/stellar-sdk";
 import { useStellarContext, parseAccountResponse } from "stellar-hooks";

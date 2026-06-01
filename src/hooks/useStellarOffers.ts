@@ -1,3 +1,10 @@
+/**
+ * @file useStellarOffers.ts
+ * @description Hook for fetching open offers for a Stellar account.
+ * @package stellar-hooks
+ * @license MIT
+ */
+
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Horizon } from "@stellar/stellar-sdk";
 import { useStellarContext } from "../context";

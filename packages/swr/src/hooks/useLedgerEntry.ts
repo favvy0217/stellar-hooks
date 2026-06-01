@@ -1,3 +1,10 @@
+/**
+ * @file useLedgerEntry.ts
+ * @description SWR hook for fetching ledger entries from Soroban RPC.
+ * @package @stellar-hooks/swr
+ * @license MIT
+ */
+
 import useSWR, { type SWRConfiguration } from "swr";
 import { rpc as SorobanRpc, xdr } from "@stellar/stellar-sdk";
 import { useStellarContext } from "stellar-hooks";

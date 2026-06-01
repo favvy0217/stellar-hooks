@@ -1,3 +1,10 @@
+/**
+ * @file usePathPayment.ts
+ * @description Hook for finding and executing path payments on Stellar.
+ * @package stellar-hooks
+ * @license MIT
+ */
+
 import { useCallback } from "react";
 import {
   Asset,

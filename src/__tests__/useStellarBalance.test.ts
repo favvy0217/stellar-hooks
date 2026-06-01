@@ -1,3 +1,10 @@
+/**
+ * @file useStellarBalance.test.ts
+ * @description Unit tests for the useStellarBalance hook.
+ * @package stellar-hooks
+ * @license MIT
+ */
+
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { renderHook } from "@testing-library/react";
 import { useStellarBalance } from "../hooks/useStellarBalance";

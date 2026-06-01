@@ -1,3 +1,10 @@
+/**
+ * @file useStellarBalanceQuery.ts
+ * @description React Query hook for fetching Stellar account balances.
+ * @package @stellar-hooks/query
+ * @license MIT
+ */
+
 import { useQuery } from "react-query";
 import { useStellarBalance } from "stellar-hooks";
 import type { StellarBalance } from "stellar-hooks";

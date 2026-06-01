@@ -1,3 +1,10 @@
+/**
+ * @file useAssetMetadata.ts
+ * @description SWR hook for fetching asset metadata.
+ * @package @stellar-hooks/swr
+ * @license MIT
+ */
+
 import { useMemo } from "react";
 import { useStellarAccount } from "./useStellarAccount";
 import { useStellarToml, type StellarTomlData } from "./useStellarToml";

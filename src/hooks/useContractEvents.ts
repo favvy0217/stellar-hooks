@@ -1,3 +1,11 @@
+/**
+ * @file useContractEvents.ts
+ * @description Hook for polling Soroban contract events from RPC.
+ * @package stellar-hooks
+ * @license MIT
+ */
+
+import { useCallback, useEffect, useReducer, useRef } from "react";
 import { useState, useEffect } from "react";
 import { rpc } from "@stellar/stellar-sdk";
 import { useStellarContext } from "../context";

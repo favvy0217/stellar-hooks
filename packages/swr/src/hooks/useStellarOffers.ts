@@ -1,3 +1,10 @@
+/**
+ * @file useStellarOffers.ts
+ * @description SWR hook for fetching open offers for a Stellar account.
+ * @package @stellar-hooks/swr
+ * @license MIT
+ */
+
 import useSWR, { type SWRConfiguration } from "swr";
 import { Horizon } from "@stellar/stellar-sdk";
 import { useStellarContext } from "stellar-hooks";

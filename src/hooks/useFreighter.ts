@@ -1,4 +1,11 @@
-import { useCallback, useEffect, useReducer } from "react";
+/**
+ * @file useFreighter.ts
+ * @description Hook for interacting with the Freighter wallet extension.
+ * @package stellar-hooks
+ * @license MIT
+ */
+
+import { useCallback, useEffect, useState } from "react";
 import {
   isConnected,
   getPublicKey,

@@ -1,3 +1,10 @@
+/**
+ * @file context.tsx
+ * @description React Context and Provider for Stellar configuration.
+ * @package stellar-hooks
+ * @license MIT
+ */
+
 import React, { createContext, useContext, useMemo } from "react";
 import type { StellarContextValue, StellarProviderProps } from "./types";
 import { NETWORK_CONFIGS } from "./types";

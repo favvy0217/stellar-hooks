@@ -1,3 +1,10 @@
+/**
+ * @file useFreighterQuery.ts
+ * @description React Query hook for Freighter wallet integration.
+ * @package @stellar-hooks/query
+ * @license MIT
+ */
+
 import { useMutation } from "react-query";
 import { useFreighter } from "stellar-hooks";
 import type { UseFreighterQueryOptions } from "../types";

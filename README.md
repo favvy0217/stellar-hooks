@@ -15,6 +15,17 @@ npm install stellar-hooks
 
 ---
 
+## Features
+
+- **Freighter Integration**: Seamlessly connect and interact with the Freighter wallet.
+- **Horizon Data Fetching**: Easy access to account balances, offers, and more.
+- **Soroban Support**: Call smart contracts with built-in simulation and auth handling.
+- **Transaction Helpers**: Simplified submission and polling for both classic and Soroban.
+- **Modular Adapters**: First-class support for React Query and SWR.
+- **Type-Safe**: Written in TypeScript with full type definitions.
+
+---
+
 ## Quick start
 
 ```tsx

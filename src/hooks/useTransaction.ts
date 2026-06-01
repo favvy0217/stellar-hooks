@@ -1,3 +1,10 @@
+/**
+ * @file useTransaction.ts
+ * @description Hook for submitting and tracking Stellar/Soroban transactions.
+ * @package stellar-hooks
+ * @license MIT
+ */
+
 import { useCallback, useReducer } from "react";
 import {
   rpc,

@@ -1,3 +1,10 @@
+/**
+ * @file useStellarAccount.polling.test.tsx
+ * @description Unit tests for the polling behavior of useStellarAccount.
+ * @package stellar-hooks
+ * @license MIT
+ */
+
 import React, { useEffect } from "react";
 import TestRenderer, { act } from "react-test-renderer";
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";

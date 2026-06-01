@@ -1,3 +1,10 @@
+/**
+ * @file useStellarBalance.ts
+ * @description SWR hook for fetching Stellar account balances.
+ * @package @stellar-hooks/swr
+ * @license MIT
+ */
+
 import { useMemo } from "react";
 import type { StellarBalance } from "stellar-hooks";
 import { useStellarAccount, type UseStellarAccountSWROptions } from "./useStellarAccount";

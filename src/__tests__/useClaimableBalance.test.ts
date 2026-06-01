@@ -1,3 +1,10 @@
+/**
+ * @file useClaimableBalance.test.ts
+ * @description Unit tests for the useClaimableBalance hook.
+ * @package stellar-hooks
+ * @license MIT
+ */
+
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { useFreighter } from "../hooks/useFreighter";
 

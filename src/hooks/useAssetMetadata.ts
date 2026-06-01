@@ -1,3 +1,9 @@
+/**
+ * @file useAssetMetadata.ts
+ * @description Hook for fetching asset metadata from stellar.toml files.
+ * @package stellar-hooks
+ */
+
 import { useMemo } from "react";
 import { useStellarAccount } from "./useStellarAccount";
 import { useStellarToml } from "./useStellarToml";

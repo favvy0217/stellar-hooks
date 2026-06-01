@@ -1,3 +1,10 @@
+/**
+ * @file useStellarAccountQuery.ts
+ * @description React Query hook for fetching Stellar account data.
+ * @package @stellar-hooks/query
+ * @license MIT
+ */
+
 import { useQuery } from "react-query";
 import { useStellarAccount } from "stellar-hooks";
 import type { UseStellarAccountQueryOptions } from "../types";

@@ -1,3 +1,10 @@
+/**
+ * @file useFreighter.test.ts
+ * @description Unit tests for the useFreighter hook.
+ * @package stellar-hooks
+ * @license MIT
+ */
+
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { renderHook, act, waitFor } from "@testing-library/react";
 import { useFreighter } from "../hooks/useFreighter";
