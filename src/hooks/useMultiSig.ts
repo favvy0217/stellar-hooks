@@ -41,6 +41,27 @@ function countSignatures(xdr: string, networkPassphrase: string): number {
   }
 }
 
+/**
+ * Build a multi-signature Stellar transaction, collect signatures from multiple
+ * Freighter-connected signers, and submit when the threshold is met.
+ *
+ * @example
+ * ```tsx
+ * const { build, sign, submit, unsignedXdr, signatureCount, status } = useMultiSig();
+ *
+ * // Step 1 — signer A builds the tx
+ * const xdr = await build([Operation.payment({ ... })]);
+ *
+ * // Step 2 — signer A signs
+ * const signedXdr = await sign(xdr);
+ *
+ * // Share signedXdr with signer B out-of-band, then:
+ * const doublySignedXdr = await sign(signedXdr);
+ *
+ * // Step 3 — submit when threshold is met
+ * await submit(doublySignedXdr);
+ * ```
+ */
 export function useMultiSig(options: UseMultiSigOptions = {}): UseMultiSigReturn {
   const { fee = 100, timeoutSeconds = 60, onSuccess, onError } = options;
   const { config } = useStellarContext();
