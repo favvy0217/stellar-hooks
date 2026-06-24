@@ -76,7 +76,7 @@ function createReducer<TResult>() {
  * </button>;
  * ```
  */
-export function useSorobanContract<TResult = unknown>(
+export function useSorobanContract<TResult = xdr.ScVal>(
   options: ContractCallOptions
 ): UseContractCallReturn<TResult> {
   const { config } = useStellarContext();
@@ -209,6 +209,8 @@ export function useSorobanContract<TResult = unknown>(
     },
     [options, publicKey, networkPassphrase, signTransaction, config]
   );
+
+  const [result, setResult] = useState<TResult | null>(null);
 
   const reset = useCallback(() => dispatch({ type: "RESET" }), []);
 
