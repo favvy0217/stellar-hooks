@@ -13,7 +13,7 @@ import {
 import { useStellarContext } from "../context";
 import { useTransaction } from "./useTransaction";
 import { useFreighter } from "./useFreighter";
-import type { TransactionStatus } from "../types";
+import { unsafeAsXdrString, type TransactionStatus } from "../types";
 import { validatePublicKey } from "../utils";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
@@ -222,7 +222,7 @@ export function useClaimBalance(
       const builtXdr = tx.toXDR();
 
       // 3. Sign via Freighter
-      const signedXdr = await signTransaction(builtXdr, {
+      const signedXdr = await signTransaction(unsafeAsXdrString(builtXdr), {
         networkPassphrase: config.networkPassphrase,
       });
 

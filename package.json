@@ -23,7 +23,7 @@
     "dist"
   ],
   "scripts": {
-    "build": "tsup src/index.ts --format cjs,esm --dts --clean --treeshake --external react,@stellar/stellar-sdk,@stellar/stellar-sdk/rpc,@stellar/stellar-sdk/contract,@stellar/freighter-api",
+    "build": "tsup src/index.ts --format cjs,esm --dts --clean --treeshake --external react,@stellar/stellar-sdk,@stellar/stellar-sdk/rpc,@stellar/stellar-sdk/contract,@stellar/freighter-api,@walletconnect/sign-client",
     "dev": "tsup src/index.ts --format cjs,esm --dts --watch",
     "lint": "eslint src --ext .ts,.tsx",
     "typecheck": "tsc --noEmit",
@@ -96,6 +96,7 @@
     "@types/react-test-renderer": "^18.3.0",
     "@typescript-eslint/eslint-plugin": "^7.0.0",
     "@typescript-eslint/parser": "^7.0.0",
+    "@walletconnect/sign-client": "^2.23.9",
     "eslint": "^8.57.0",
     "husky": "^9.1.7",
     "eslint-plugin-react-hooks": "^4.6.2",

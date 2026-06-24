@@ -22,28 +22,41 @@ export interface NetworkConfig {
   networkPassphrase: string;
 }
 
-export {
-  // Branded types
+import {
   type StellarPublicKey,
   type StellarContractId,
   type StellarXdrString,
   type StellarTxHash,
   type StellarAssetIssuer,
-  
-  // Factory functions
   asPublicKey,
   asContractId,
   asXdrString,
   asTxHash,
   asAssetIssuer,
-  
-  // Unsafe casts
   unsafeAsPublicKey,
   unsafeAsContractId,
   unsafeAsXdrString,
   unsafeAsTxHash,
   unsafeAsAssetIssuer,
 } from "./branded";
+
+export {
+  type StellarPublicKey,
+  type StellarContractId,
+  type StellarXdrString,
+  type StellarTxHash,
+  type StellarAssetIssuer,
+  asPublicKey,
+  asContractId,
+  asXdrString,
+  asTxHash,
+  asAssetIssuer,
+  unsafeAsPublicKey,
+  unsafeAsContractId,
+  unsafeAsXdrString,
+  unsafeAsTxHash,
+  unsafeAsAssetIssuer,
+};
 
 /**
  * Endpoint configuration for a private or self-hosted Stellar network.

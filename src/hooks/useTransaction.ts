@@ -57,7 +57,7 @@ export interface UseTransactionReturn extends TransactionState {
 type Action =
   | { type: "RESET" }
   | { type: "STATUS"; payload: TransactionStatus }
-  | { type: "SUCCESS"; hash: string }
+  | { type: "SUCCESS"; hash: StellarTxHash }
   | { type: "ERROR"; payload: Error };
 
 function reducer(state: TransactionState, action: Action): TransactionState {

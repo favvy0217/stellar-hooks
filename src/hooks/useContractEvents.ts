@@ -69,6 +69,20 @@ export function useContractEvents(options: UseContractEventsOptions) {
       const filter: rpc.Api.EventFilter = {
         type: options.type || "contract",
         contractIds: [options.contractId],
+        ...(options.topics !== undefined ? { topics: options.topics } : {}),
+      };
+
+      const response = await server.getEvents({
+        ...(options.startLedger !== undefined ? { startLedger: options.startLedger } : {}),
+        filters: [filter],
+        ...(cursorRef.current !== undefined ? { cursor: cursorRef.current } : {}),
+        limit: options.limit || 100,
+      });
+
+      if (isMounted.current && response.events) {
+        const lastEvent = response.events[response.events.length - 1];
+        if (lastEvent) {
+          cursorRef.current = lastEvent.pagingToken;
         ...(options.topics !== undefined && { topics: options.topics }),
       };
 
