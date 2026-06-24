@@ -72,9 +72,12 @@ export function useAccountFlags(options: UseAccountFlagsOptions = {}): UseAccoun
 
     const setOptionsParams: Parameters<typeof Operation.setOptions>[0] = {};
     if (setFlagsMask !== undefined) {
+      // SDK AuthFlag type is narrower than our bitmask; runtime accepts the numeric mask.
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       setOptionsParams.setFlags = setFlagsMask as any;
     }
     if (clearFlagsMask !== undefined) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       setOptionsParams.clearFlags = clearFlagsMask as any;
     }
 

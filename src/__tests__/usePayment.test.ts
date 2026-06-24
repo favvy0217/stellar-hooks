@@ -59,6 +59,7 @@ vi.mock("@stellar/stellar-sdk", () => ({
 const mockSubmitXdr = vi.fn().mockResolvedValue(undefined);
 const mockReset = vi.fn();
 const mockSignTransaction = vi.fn().mockResolvedValue("signed-xdr");
+let mockPublicKey: string | null = "GPUBLICKEY";
 
 vi.mock("../context", () => ({
   useStellarContext: () => ({
@@ -84,7 +85,9 @@ vi.mock("../hooks/useTransaction", () => ({
 
 vi.mock("../hooks/useFreighter", () => ({
   useFreighter: () => ({
-    publicKey: "GPUBLICKEY",
+    get publicKey() {
+      return mockPublicKey;
+    },
     signTransaction: mockSignTransaction,
   }),
 }));
@@ -109,6 +112,7 @@ function useHook(overrides = {}) {
 describe("usePayment", () => {
   beforeEach(() => {
     vi.clearAllMocks();
+    mockPublicKey = "GPUBLICKEY";
   });
 
   it("returns the correct initial state", () => {
@@ -166,15 +170,14 @@ describe("usePayment", () => {
     await hook.submit();
 
     expect(Asset.native).not.toHaveBeenCalled();
+    expect(Asset).toHaveBeenCalledWith("USDC", "GISSUER...");
   });
 
   it("throws when publicKey is null", async () => {
-    const submitFn = async () => {
-      const publicKey: string | null = null;
-      if (!publicKey) {
-        throw new Error("Freighter is not connected. Call connect() first.");
-      }
-    };
-    await expect(submitFn()).rejects.toThrow("Freighter is not connected");
+    mockPublicKey = null;
+    const hook = useHook();
+    await expect(hook.submit()).rejects.toThrow("Freighter is not connected");
+    expect(mockSignTransaction).not.toHaveBeenCalled();
+    expect(mockSubmitXdr).not.toHaveBeenCalled();
   });
 });

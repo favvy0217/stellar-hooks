@@ -15,4 +15,20 @@ module.exports = {
     ecmaVersion: "latest",
     sourceType: "module",
   },
+  overrides: [
+    {
+      files: [
+        "**/__tests__/**",
+        "**/__mocks__/**",
+        "**/*.test.ts",
+        "**/*.test.tsx",
+        "**/*.test-d.ts",
+      ],
+      rules: {
+        "@typescript-eslint/no-explicit-any": "off",
+        "@typescript-eslint/no-unused-vars": "off",
+        "react-hooks/rules-of-hooks": "off",
+      },
+    },
+  ],
 };

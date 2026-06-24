@@ -122,6 +122,7 @@ export function useWalletConnect(options: WalletConnectOptions): UseWalletConnec
 
       // Restore persisted session
       const sessions = client.session.getAll();
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const existing = sessions.find((s: any) =>
         s.namespaces?.stellar?.accounts?.some((a: string) => a.startsWith(chain))
       );

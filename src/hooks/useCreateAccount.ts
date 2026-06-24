@@ -5,7 +5,7 @@
  */
 
 import { useState, useCallback } from "react";
-import { Horizon, TransactionBuilder, Operation, Networks } from "@stellar/stellar-sdk";
+import { Horizon, TransactionBuilder, Operation } from "@stellar/stellar-sdk";
 import { useStellarContext } from "../context";
 
 export interface UseCreateAccountOptions {
@@ -87,7 +87,9 @@ export function useCreateAccount(options: UseCreateAccountOptions = {}): UseCrea
         flags: { auth_required: false, auth_revocable: false, auth_immutable: false },
         id: sourceAccountId,
         paging_token: "",
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         _links: {} as any,
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } as any);
 
       return new TransactionBuilder(sourceAccount, {

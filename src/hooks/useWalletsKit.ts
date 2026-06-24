@@ -72,8 +72,10 @@ export function useWalletsKit(options?: WalletsKitOptions): UseWalletsKitReturn 
   useEffect(() => {
     if (options?.modules) {
       StellarWalletsKit.init({
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         modules: options.modules as any,
         ...(options.selectedWalletId && { selectedWalletId: options.selectedWalletId }),
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         ...(options.network && { network: options.network as any }),
       });
     }
@@ -83,7 +85,7 @@ export function useWalletsKit(options?: WalletsKitOptions): UseWalletsKitReturn 
   useEffect(() => {
     const unsubState = StellarWalletsKit.on(KitEventType.STATE_UPDATED, (event: KitEvent) => {
       if (event.eventType === KitEventType.STATE_UPDATED) {
-        const addr = event.payload.address;
+        const addr = event.payload?.address;
         if (addr) {
           dispatch({ type: "CONNECTED", publicKey: addr });
         } else {

@@ -83,7 +83,12 @@ export function useStellarToml(
   useEffect(() => {
     if (domain) {
       void refetch();
+      return;
     }
+
+    setData(null);
+    setError(null);
+    setIsLoading(false);
   }, [domain, refetch]);
 
   return { data, isLoading, error, refetch: () => refetch(true) };
