@@ -66,6 +66,24 @@ export type {
   UseAccountMergeReturn,
 } from "./hooks/useAccountMerge";
 
+export {
+  useClaimableBalances,
+  useClaimBalance,
+  useCreateClaimableBalance,
+} from "./hooks/useClaimableBalance";
+export type {
+  ClaimableBalanceRecord,
+  ClaimableBalancesState,
+  ClaimableBalanceAsset,
+  ClaimantInput,
+  CreateClaimableBalanceParams,
+  UseClaimBalanceOptions,
+  UseClaimBalanceReturn,
+  UseClaimableBalancesReturn,
+  UseCreateClaimableBalanceOptions,
+  UseCreateClaimableBalanceReturn,
+} from "./hooks/useClaimableBalance";
+
 export { useSorobanTokenBalance } from "./hooks/useSorobanTokenBalance";
 export { useWalletsKit } from "./hooks/useWalletsKit";
 export { useWalletConnect } from "./hooks/useWalletConnect";
