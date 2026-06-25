@@ -8,24 +8,24 @@
 import { useCallback, useReducer } from "react";
 import {
   Contract,
-  rpc,
-  Transaction,
   TransactionBuilder,
-  Networks,
   BASE_FEE,
   xdr,
   nativeToScVal,
 } from "@stellar/stellar-sdk";
+import type { Transaction } from "@stellar/stellar-sdk";
+import * as rpc from "@stellar/stellar-sdk/rpc";
 import { useStellarContext } from "../context";
 import { useFreighter } from "./useFreighter";
-import type { ContractCallOptions, UseContractCallReturn, TransactionStatus } from "../types";
-import { sleep, backoff } from "../utils";
+import type { ContractCallOptions, UseContractCallReturn, TransactionStatus, StellarContractId, StellarTxHash } from "../types";
+import { unsafeAsXdrString, asTxHash, unsafeAsTxHash } from "../types";
+import { sleep, backoff, validateContractId } from "../utils";
 
 // ─── State ─────────────────────────────────────────────────────────────────────
 
 interface ContractState<TResult> {
   status: TransactionStatus;
-  hash: string | null;
+  hash: StellarTxHash | null;
   result: TResult | null;
   error: Error | null;
 }
@@ -36,7 +36,7 @@ type Action<TResult> =
   | { type: "SIGNING" }
   | { type: "SUBMITTING" }
   | { type: "POLLING" }
-  | { type: "SUCCESS"; payload: TResult; hash: string }
+  | { type: "SUCCESS"; payload: TResult; hash: StellarTxHash }
   | { type: "ERROR"; payload: Error };
 
 function createReducer<TResult>() {
@@ -90,7 +90,7 @@ function createReducer<TResult>() {
  * ```
  */
 export function useSorobanContract<TResult = unknown>(
-  contractId: string,
+  contractId: StellarContractId,
   options: Omit<ContractCallOptions<TResult>, "contractId">
 ): UseContractCallReturn<TResult> {
   const { config } = useStellarContext();
@@ -134,6 +134,9 @@ export function useSorobanContract<TResult = unknown>(
       }
 
       try {
+        // ── 0. Validate inputs ───────────────────────────────────────────────
+        validateContractId(contractId);
+
         // ── 1. Build ──────────────────────────────────────────────────────────
         dispatch({ type: "BUILDING" });
 
@@ -169,7 +172,7 @@ export function useSorobanContract<TResult = unknown>(
         // ── 3. Sign ───────────────────────────────────────────────────────────
         dispatch({ type: "SIGNING" });
 
-        const signedXdr = await signTransaction(preparedTx.toXDR(), {
+        const signedXdr = await signTransaction(unsafeAsXdrString(preparedTx.toXDR()), {
           networkPassphrase: passphrase,
         });
 
@@ -221,7 +224,7 @@ export function useSorobanContract<TResult = unknown>(
               }
             }
 
-            dispatch({ type: "SUCCESS", payload: parsed, hash: txHash });
+            dispatch({ type: "SUCCESS", payload: parsed, hash: asTxHash(txHash) });
             onSuccess?.(parsed);
             return parsed;
           }
@@ -256,6 +259,7 @@ export function useSorobanContract<TResult = unknown>(
       }
 
       try {
+        validateContractId(contractId);
         const server = sorobanRpcServer ?? new rpc.Server(config.sorobanRpcUrl);
         const contract = new Contract(contractId);
 
@@ -301,7 +305,7 @@ export function useSorobanContract<TResult = unknown>(
           parsed = parseResult ? parseResult(scVal) : scVal as unknown as TResult;
         }
 
-        dispatch({ type: "SUCCESS", payload: parsed as TResult, hash: "simulation" });
+        dispatch({ type: "SUCCESS", payload: parsed as TResult, hash: unsafeAsTxHash("simulation") });
         return parsed;
       } catch (err) {
         const error = err instanceof Error ? err : new Error(String(err));

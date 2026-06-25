@@ -6,10 +6,10 @@
  */
 
 import { useCallback, useEffect, useReducer, useRef } from "react";
-import { Horizon } from "@stellar/stellar-sdk";
+import { getHorizonServer } from "../utils/memoizedServers";
 import { useStellarContext } from "../context";
-import { parseAccountResponse } from "../utils";
-import type { StellarAccountData } from "../types";
+import type { StellarAccountData, StellarPublicKey } from "../types";
+import { parseAccountResponse, validatePublicKey } from "../utils";
 
 // ─── Types ───────────────────────────────────────────────────────────────────
 
@@ -18,6 +18,12 @@ export interface UseStellarAccountOptions {
   enabled?: boolean;
   /** Polling interval in milliseconds. If 0, polling is disabled. Defaults to 0. */
   refetchInterval?: number;
+  /**
+   * When true (default), concurrent duplicate requests are suppressed — if a fetch
+   * is already in-flight when the next poll fires, that poll tick is skipped.
+   * Set to false to allow overlapping requests.
+   */
+  deduplicate?: boolean;
 }
 
 export interface UseStellarAccountReturn {
@@ -44,7 +50,7 @@ interface State {
 
 type Action =
   | { type: "FETCH_START" }
-  | { type: "FETCH_SUCCESS"; payload: StellarAccountData }
+  | { type: "FETCH_SUCCESS"; payload: StellarAccountData | null }
   | { type: "FETCH_ERROR"; payload: Error };
 
 function reducer(state: State, action: Action): State {
@@ -77,26 +83,33 @@ const initialState: State = {
 /**
  * Fetch and optionally poll a Stellar account from Horizon.
  *
- * @param {string | null | undefined} publicKey - The public key of the account to fetch.
+ * @param {StellarPublicKey | null | undefined} publicKey - The public key of the account to fetch.
  * @param {UseStellarAccountOptions} [options={}] - Configuration options.
  * @returns {UseStellarAccountReturn}
  */
 export function useStellarAccount(
-  publicKey: string | null | undefined,
+  publicKey: StellarPublicKey | null | undefined,
   options: UseStellarAccountOptions = {}
 ): UseStellarAccountReturn {
-  const { enabled = true, refetchInterval = 0 } = options;
+  const { enabled = true, refetchInterval = 0, deduplicate = true } = options;
   const { config } = useStellarContext();
   const [state, dispatch] = useReducer(reducer, initialState);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const isFetchingRef = useRef(false);
 
   const fetchAccount = useCallback(async () => {
-    if (!publicKey) return;
+    if (!publicKey) {
+      dispatch({ type: "FETCH_SUCCESS", payload: null });
+      return;
+    }
+    if (deduplicate && isFetchingRef.current) return;
 
+    isFetchingRef.current = true;
     dispatch({ type: "FETCH_START" });
 
     try {
-      const server = new Horizon.Server(config.horizonUrl);
+      validatePublicKey(publicKey);
+      const server = getHorizonServer(config.horizonUrl);
       const rawAccount = await server.loadAccount(publicKey);
       const parsed = parseAccountResponse(rawAccount);
       dispatch({ type: "FETCH_SUCCESS", payload: parsed });
@@ -105,8 +118,10 @@ export function useStellarAccount(
         type: "FETCH_ERROR",
         payload: err instanceof Error ? err : new Error(String(err)),
       });
+    } finally {
+      isFetchingRef.current = false;
     }
-  }, [publicKey, config.horizonUrl]);
+  }, [publicKey, config.horizonUrl, deduplicate]);
 
   useEffect(() => {
     if (enabled && publicKey) {
@@ -114,6 +129,8 @@ export function useStellarAccount(
       if (refetchInterval > 0) {
         timerRef.current = setInterval(() => void fetchAccount(), refetchInterval);
       }
+    } else if (!publicKey || !enabled) {
+      dispatch({ type: "FETCH_SUCCESS", payload: null });
     }
     return () => {
       if (timerRef.current) clearInterval(timerRef.current);
